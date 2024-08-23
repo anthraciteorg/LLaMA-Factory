@@ -136,7 +136,7 @@ class CustomKTOTrainer(KTOTrainer):
         logits = model(**model_inputs, return_dict=True, use_cache=False).logits.to(torch.float32)
 
         logps, valid_length = get_batch_logps(logits=logits, labels=batch["{}labels".format(prefix)])
-        return logps, logps / valid_length
+        return logps / valid_length * 10, logps / valid_length * 10
 
     def concatenated_forward(
         self, model: "PreTrainedModel", batch: Dict[str, "torch.Tensor"]
