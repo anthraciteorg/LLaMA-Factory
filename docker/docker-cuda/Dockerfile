@@ -47,6 +47,9 @@ RUN pip uninstall -y transformer-engine flash-attn && \
         pip install --no-cache-dir flash-attn --no-build-isolation; \
     fi
 
+# Install Kalomaze TRL patch
+RUN pip install git+https://github.com/kubernetes-bad/trl.git
+
 # Set up volumes
 VOLUME [ "/root/.cache/huggingface", "/root/.cache/modelscope", "/app/data", "/app/output" ]
 
