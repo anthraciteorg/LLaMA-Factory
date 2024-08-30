@@ -74,8 +74,8 @@ def fix_valuehead_checkpoint(
         path_to_checkpoint = os.path.join(output_dir, WEIGHTS_NAME)
         state_dict: Dict[str, torch.Tensor] = torch.load(path_to_checkpoint, map_location="cpu")
 
-    decoder_state_dict = {}
-    v_head_state_dict = {}
+    os.remove(path_to_checkpoint)
+    decoder_state_dict, v_head_state_dict = {}, {}
     for name, param in state_dict.items():
         if name.startswith("v_head."):
             v_head_state_dict[name] = param
@@ -91,7 +91,6 @@ def fix_valuehead_checkpoint(
     else:
         torch.save(v_head_state_dict, os.path.join(output_dir, V_HEAD_WEIGHTS_NAME))
 
-    os.remove(path_to_checkpoint)
     logger.info("Value head model saved at: {}".format(output_dir))
 
 
